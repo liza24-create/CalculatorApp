@@ -80,13 +80,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 try {
-                    double value = Double.parseDouble(currentText);
+                    double value = Double.parseDouble(currentText.replace(",", "."));
                     if (v.getId() == R.id.btnSqrt) {
                         if (value < 0) {
                             txtResult.setText("Error");
                         } else {
                             double result = Math.sqrt(value);
-                            txtResult.setText(String.valueOf(result).replaceAll("\\.0$", ""));
+                            txtResult.setText(String.valueOf(result).replaceAll("\\.0$", "").replace(".", ","));
                         }
                         return;
                     }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (currentOperation.isEmpty()) return;
 
-                String fullText = txtResult.getText().toString();
+                String fullText = txtResult.getText().toString().replace(",", ".");
                 String secondStr = fullText.substring(fullText.lastIndexOf(currentOperation) + currentOperation.length()).trim();
                 if (secondStr.isEmpty()) return;
                 double secondNumber = Double.parseDouble(secondStr);
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                String finalResult = String.valueOf(result).replaceAll("\\.0$", "");
+                String finalResult = String.valueOf(result).replaceAll("\\.0$", "").replace(".", ",");
                 txtResult.setText(finalResult);
                 currentOperation = "";
                 isOpChosen = false;
