@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Button clickedButton = (Button) v;
                 String opText = clickedButton.getText().toString();
-                String currentText = txtResult.getText().toString().replace(",", ".");
+                String currentText = txtResult.getText().toString();
 
                 if (currentText.isEmpty()) return;
                 if (currentText.endsWith(" ")) {
@@ -74,19 +74,19 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (!currentOperation.isEmpty()) {
-                    findViewById(R.id.btnEquals).performClick(); // Сами считаем промежуточный итог!
-                    currentText = txtResult.getText().toString(); // Обновляем текст (там уже результат, например "11")
+                    findViewById(R.id.btnEquals).performClick();
+                    currentText = txtResult.getText().toString();
                     if (currentText.equals("Error")) return;
                 }
 
                 try {
-                    double value = Double.parseDouble(currentText.replace(",", "."));
+                    double value = Double.parseDouble(currentText);
                     if (v.getId() == R.id.btnSqrt) {
                         if (value < 0) {
                             txtResult.setText("Error");
                         } else {
                             double result = Math.sqrt(value);
-                            txtResult.setText(String.valueOf(result).replaceAll("\\.0$", "").replace(".", ","));
+                            txtResult.setText(String.valueOf(result).replaceAll("\\.0$", ""));
                         }
                         return;
                     }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (currentOperation.isEmpty()) return;
 
-                String fullText = txtResult.getText().toString().replace(",", ".");
+                String fullText = txtResult.getText().toString();
                 String secondStr = fullText.substring(fullText.lastIndexOf(currentOperation) + currentOperation.length()).trim();
                 if (secondStr.isEmpty()) return;
                 double secondNumber = Double.parseDouble(secondStr);
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                String finalResult = String.valueOf(result).replaceAll("\\.0$", "").replace(".", ",");
+                String finalResult = String.valueOf(result).replaceAll("\\.0$", "");
                 txtResult.setText(finalResult);
                 currentOperation = "";
                 isOpChosen = false;
