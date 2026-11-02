@@ -38,4 +38,9 @@
     <string name="btn_minus">-</string>
     <string name="btn_plus">+</string>
     <string name="btn_equals">=</string>
+
+
+    <!-- Text View-->
+    <string name="txt_title">Calculator</string>
+    <string name="txt_result">0</string>
 </resources>
