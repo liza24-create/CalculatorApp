@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,8 +14,8 @@
         android:layout_height="wrap_content"
         android:text="@string/txt_title"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/txtResult"
@@ -26,7 +27,10 @@
         android:padding="8dp"
         android:text="@string/txt_result"
         android:textSize="44sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="16sp"
+        android:autoSizeMaxTextSize="44sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
