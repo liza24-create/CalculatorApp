@@ -17,7 +17,7 @@
     <string name="btn_inverse">1/x</string>
     <string name="btn_square">x²</string>
     <string name="btn_sqrt">√x</string>
-    <string name="btn_sigh">±</string>
+    <string name="btn_sign">±</string>
 
     <!-- Digits -->
     <string name="btn_0">0</string>

@@ -69,25 +69,34 @@ public class MainActivity extends AppCompatActivity {
                 String currentText = txtResult.getText().toString().replace(",", ".");
 
                 if (currentText.isEmpty()) return;
-                double value = Double.parseDouble(currentText);
-
-                if (v.getId() == R.id.btnSqrt) {
-                    if (value < 0) {
-                        txtResult.setText("Error");
-                    } else {
-                        double result = Math.sqrt(value);
-                        txtResult.setText(String.valueOf(result).replaceAll("\\.0$", "").replace(".", ","));
-                    }
-                    isOpChosen = true;
+                if (currentText.endsWith(" ")) {
                     return;
                 }
 
-                firstNumber = value;
-                currentOperation = opText;
-                isOpChosen = true;
+                if (!currentOperation.isEmpty()) {
+                    findViewById(R.id.btnEquals).performClick(); // Сами считаем промежуточный итог!
+                    currentText = txtResult.getText().toString(); // Обновляем текст (там уже результат, например "11")
+                    if (currentText.equals("Error")) return;
+                }
 
-                txtResult.setText(String.format("%s %s ", txtResult.getText().toString(), opText));
+                try {
+                    double value = Double.parseDouble(currentText.replace(",", "."));
+                    if (v.getId() == R.id.btnSqrt) {
+                        if (value < 0) {
+                            txtResult.setText("Error");
+                        } else {
+                            double result = Math.sqrt(value);
+                            txtResult.setText(String.valueOf(result).replaceAll("\\.0$", "").replace(".", ","));
+                        }
+                        return;
+                    }
 
+                    firstNumber = value;
+                    currentOperation = opText;
+                    txtResult.setText(String.format("%s %s ", currentText, opText));
+
+                } catch (NumberFormatException e) {
+                }
             }
         };
 
@@ -126,6 +135,79 @@ public class MainActivity extends AppCompatActivity {
                 txtResult.setText(finalResult);
                 currentOperation = "";
                 isOpChosen = false;
+            }
+        });
+
+
+        View.OnClickListener clearClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtResult.setText("0");
+                firstNumber = 0;
+                currentOperation = "";
+                isOpChosen = false;
+            }
+        };
+        findViewById(R.id.btnC).setOnClickListener(clearClickListener);
+        findViewById(R.id.btnCe).setOnClickListener(clearClickListener);
+
+
+        findViewById(R.id.btnBackspace).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String currentText = txtResult.getText().toString();
+
+                if (currentText.isEmpty() || currentText.equals("0") || currentText.equals("Error")) {
+                    txtResult.setText("0");
+                    return;
+                }
+
+                if (currentText.endsWith(" ")) {
+                    currentText = currentText.substring(0, currentText.length() - 3);
+                    currentOperation = "";
+                    isOpChosen = false;
+                } else {
+                    currentText = currentText.substring(0, currentText.length() - 1);
+                }
+
+                if (currentText.isEmpty()) {
+                    txtResult.setText("0");
+                } else {
+                    txtResult.setText(currentText);
+                }
+            }
+        });
+
+        findViewById(R.id.btnSign).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String currentText = txtResult.getText().toString();
+
+                if (currentText.equals("0") || currentText.equals("Error")) return;
+
+
+                if (currentOperation.isEmpty()) {
+                    if (currentText.startsWith("-")) {
+                        txtResult.setText(currentText.substring(1)); // remove minus
+                    } else {
+                        txtResult.setText(String.format("-%s", currentText));
+                    }
+                }
+                else {
+                    int opIndex = currentText.lastIndexOf(currentOperation) + currentOperation.length();
+                    String firstPart = currentText.substring(0, opIndex).trim() + " ";
+                    String secondPart = currentText.substring(opIndex).trim();
+
+                    if (secondPart.isEmpty()) return;
+
+                    if (secondPart.startsWith("-")) {
+                        secondPart = secondPart.substring(1);
+                    } else {
+                        secondPart = "-" + secondPart;
+                    }
+
+                    txtResult.setText(String.format("%s%s", firstPart, secondPart));
+                }
             }
         });
 

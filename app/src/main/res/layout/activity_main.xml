@@ -289,11 +289,11 @@
 
         <Button
             style="?android:attr/buttonStyle"
-            android:id="@+id/btnSigh"
+            android:id="@+id/btnSign"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
-            android:text="@string/btn_sigh"
+            android:text="@string/btn_sign"
             android:padding="4dp"/>
 
         <Button
